@@ -1,0 +1,8 @@
+Generate task description suggestions for a Email task.
+Include:
+- Key points to cover
+- Common requirements
+- Best practices
+- Example structure
+
+Response should be concise and practical.
