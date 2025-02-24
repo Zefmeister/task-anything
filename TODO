@@ -1,0 +1,7 @@
+1. View Tasks
+    1.1. Need "View Tasks" button on GUI
+    1.2. Clicking View Tasks should open a new window with all task information.
+    1.3. View Tasks UI should give the ability to complete tasks
+    1.4. View Tasks UI should have the ability to sort data
+    1.5. Task Details in View Tasks UI should be truncated.
+    1.6. Double Clicking on a task in View Tasks UI should provide an ability to pop out the task with all of the details.

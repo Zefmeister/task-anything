@@ -28,6 +28,9 @@ class TaskViewWindow:
         columns = ('Type', 'Priority', 'Due Date', 'Description', 'Status', 'Created')
         self.tree = ttk.Treeview(self.window, columns=columns, show='headings')
         
+        # Bind double click
+        self.tree.bind('<Double-1>', self.show_task_details)
+        
         # Set column headings and widths
         widths = {'Type': 100, 'Priority': 60, 'Due Date': 100, 
                  'Description': 300, 'Status': 80, 'Created': 150}
@@ -108,3 +111,37 @@ class TaskViewWindow:
         task_id = self.tree.item(selected[0], 'tags')[0]
         self.task_manager.complete_task(task_id)
         self.load_tasks()  # Refresh view
+
+    def show_task_details(self, event):
+        """Show full task details when double-clicking a task"""
+        item = self.tree.selection()[0]
+        tags = self.tree.item(item, 'tags')
+        if not tags:
+            return
+            
+        task_id = tags[0]
+        task = next((t for t in self.task_manager.tasks if t['id'] == task_id), None)
+        if not task:
+            return
+            
+        details_window = tk.Toplevel(self.window)
+        details_window.title("Task Details")
+        details_window.geometry("500x400")
+        
+        # Create text widget with task details
+        text = tk.Text(details_window, wrap=tk.WORD, padx=10, pady=10)
+        text.pack(fill=tk.BOTH, expand=True)
+        
+        # Format task details
+        details = f"""Type: {task['type']}
+Priority: {task['priority']}
+Due Date: {task['due_date']}
+Status: {task['status'].capitalize()}
+Created: {datetime.fromisoformat(task['created_at']).strftime('%Y-%m-%d %H:%M')}
+{f"Completed: {datetime.fromisoformat(task['completed_at']).strftime('%Y-%m-%d %H:%M')}" if task.get('completed_at') else ''}
+
+Description:
+{task['description']}"""
+        
+        text.insert('1.0', details)
+        text.config(state='disabled')  # Make read-only

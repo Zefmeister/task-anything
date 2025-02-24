@@ -1,0 +1,13 @@
+Meeting Details:
+Attendees: A, B, C
+
+Agenda:
+1. explain github actions
+2. Create a small demo
+
+Action Items:
+1. [To be filled during meeting]
+2. [To be filled during meeting]
+
+Notes:
+[Space for meeting notes]

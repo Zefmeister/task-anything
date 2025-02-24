@@ -11,7 +11,7 @@ class TaskAnythingApp:
         self.root = tk.Tk()
         self.root.title("Task Anything")
         self.task_manager = TaskManager()
-        self.notification_manager = NotificationManager()
+        self.notification_manager = NotificationManager(self.task_manager)
         self.automation_handler = AutomationHandler()
         self.create_btn = None
         self.setup_gui()
@@ -57,6 +57,10 @@ class TaskAnythingApp:
         # Create task button - store reference
         self.create_btn = ttk.Button(button_frame, text="Create Task", command=self.create_task)
         self.create_btn.pack(side=tk.LEFT, padx=5)
+        
+        # View Tasks button
+        view_btn = ttk.Button(button_frame, text="View Tasks", command=self.show_task_view)
+        view_btn.pack(side=tk.LEFT, padx=5)
         
         # New task button
         new_btn = ttk.Button(button_frame, text="New Task", command=self.clear_form)
@@ -127,6 +131,11 @@ class TaskAnythingApp:
                 self.description.insert('1.0', "Message content:")
             elif task_type == "Meeting":
                 self.description.insert('1.0', "Attendees: [list]\nAgenda:\n1. \n2. ")
+    
+    def show_task_view(self):
+        """Show the task view window"""
+        from task_view import TaskViewWindow
+        TaskViewWindow(self.root, self.task_manager)
     
     def run(self):
         self.notification_manager.start_reminder_thread()
